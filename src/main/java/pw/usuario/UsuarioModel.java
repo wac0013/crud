@@ -13,7 +13,7 @@ public class UsuarioModel {
 
   private static Connection obterConexao() throws SQLException {
     //Estabelecer uma conexão com o banco de dados.
-    String url = "jdbc:derby://localhost:1527/vendadb;create=true";
+    String url = "jdbc:derby://localhost:1527/usuario;create=true";
     String user = "app";
     String password = "app";
     return DriverManager.getConnection(url, user, password);
@@ -23,7 +23,7 @@ public class UsuarioModel {
     Connection conn = obterConexao();
     
     //Obter sentença SQL.
-    String sql = "insert into venda (codigo, produto, quantidade) values (?, ?, ?)";
+    String sql = "insert into usuario (login, senha, nome, email) values (?, ?, ?, ?)";
     PreparedStatement pstmt = conn.prepareStatement(sql);
     pstmt.setString(1, venda.getLogin());
     pstmt.setString(2, venda.getSenha());
@@ -49,7 +49,7 @@ public class UsuarioModel {
     Connection conn = obterConexao();
     
     Statement stmt = conn.createStatement();
-    String sql = "select codigo, produto, quantidade from venda order by codigo";
+    String sql = "select login, nome, email, senha from usuario order by login";
     ResultSet rs = stmt.executeQuery(sql);
   
     List<Usuario> listaDeUsuarios = new ArrayList<Usuario>();
@@ -70,7 +70,7 @@ public class UsuarioModel {
     Connection conn = obterConexao();
     
     //Obter sentença SQL.
-    String sql = "delete from venda where codigo = ?";
+    String sql = "delete from usuario where login = ?";
     PreparedStatement pstmt = conn.prepareStatement(sql);
     pstmt.setString(1, user.getLogin());
     pstmt.execute();
